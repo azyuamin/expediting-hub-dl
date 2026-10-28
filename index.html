@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expediting Hub - Download</title>
+<style>
+:root{
+  --bg:#0E141A; --panel:#17212A; --ink:#E8EDF2; --muted:#93A1AD; --line:#2A3742;
+  --tag:#F2B705; --tag-ink:#1A1400;
+  --f-ui:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --f-din:'Bahnschrift','Barlow','Roboto Condensed','Arial Narrow',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(1200px 600px at 70% -10%,#1b2a38,transparent),var(--bg);color:var(--ink);font:16px/1.6 var(--f-ui);display:flex;flex-direction:column}
+.wrap{max-width:760px;margin:0 auto;padding:48px 20px 60px;width:100%}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.brand svg{width:44px;height:31px}
+.brand b{font:600 22px/1 var(--f-din)}
+.brand small{display:block;color:var(--muted);font:400 13px/1.3 var(--f-ui)}
+h1{font:600 40px/1.1 var(--f-din);margin:0 0 14px;letter-spacing:-.01em}
+.lede{color:var(--muted);font-size:18px;max-width:52ch;margin:0 0 32px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.dl{display:inline-flex;align-items:center;gap:10px;background:var(--tag);color:var(--tag-ink);font:600 17px/1 var(--f-din);padding:15px 26px;border-radius:9px;text-decoration:none}
+.dl:hover{filter:brightness(1.05)}
+.dl svg{width:20px;height:20px}
+.meta{color:var(--muted);font-size:14px}
+.meta b{color:var(--ink)}
+.steps{margin:40px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:14px 0 14px 44px;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:13px;width:28px;height:28px;border-radius:50%;background:var(--panel);border:1px solid var(--line);color:var(--ink);font:600 14px/28px var(--f-din);text-align:center}
+.steps b{display:block}.steps span{color:var(--muted);font-size:14.5px}
+.note{margin-top:34px;padding:16px 18px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:14px;background:rgba(255,255,255,.02)}
+footer{color:var(--muted);font-size:13px;text-align:center;padding:20px}
+@media (max-width:560px){h1{font-size:32px}.card{padding:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <svg viewBox="0 0 34 24" aria-hidden="true"><path d="M0 0h24l10 12-10 12H0z" fill="#F2B705"/><circle cx="23" cy="12" r="3.2" fill="#0E141A"/></svg>
+    <div><b>Expediting Hub</b><small>NEAS expediting tools</small></div>
+  </div>
+  <h1>Update NEAS straight from your Excel.</h1>
+  <p class="lede">One app for the Acpt.ROS, Forecast Delivery, Remarks and Multi-column updates. It reads the NEAS Items grid and fills in your dates - nothing is saved until you review and press Save All.</p>
+  <div class="card">
+    <a class="dl" id="dl" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></svg>
+      Download for Windows
+    </a>
+    <div class="meta" id="meta">Latest version</div>
+  </div>
+  <ol class="steps">
+    <li><b>Download and run the installer</b><span>No admin rights needed. It installs just for you and adds Expediting Hub to the Start menu.</span></li>
+    <li><b>Open Expediting Hub</b><span>From the Start menu or the desktop shortcut. Add your NEAS login once in Settings.</span></li>
+    <li><b>Updates are automatic</b><span>When a new version is published, the app tells you on opening - press Update now and it updates itself.</span></li>
+  </ol>
+  <div class="note">Windows may show a blue "Windows protected your PC" box the first time, because the app is new. Click <b>More info</b> then <b>Run anyway</b>. If your antivirus blocks it, ask IT to allow Expediting Hub.</div>
+</div>
+<footer>Internal tool for the NEAS Expediting team.</footer>
+
+<script>
+// EDIT THIS ONE LINE to your public download repo (user/repo):
+const REPO = "azyuamin/expediting-hub-dl";
+
+const base = `https://github.com/${REPO}/releases/latest/download`;
+document.getElementById('dl').href = base + '/ExpeditingHub-Setup.exe';
+// Best-effort version label; the download button works regardless.
+fetch(base + '/version.json', { cache: 'no-store' })
+  .then(r => r.json())
+  .then(v => {
+    const mb = v.size ? (v.size / 1048576).toFixed(1) + ' MB' : '';
+    document.getElementById('meta').innerHTML = 'Version <b>' + (v.version || '') + '</b>' + (mb ? ' · ' + mb : '');
+  })
+  .catch(() => { document.getElementById('meta').textContent = 'Latest version'; });
+</script>
+</body>
+</html>
